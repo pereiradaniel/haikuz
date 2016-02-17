@@ -1,0 +1,40 @@
+<head>
+  <title>haikuz</title>
+</head>
+
+<body>
+  <h1>Haikuz</h1>
+  {{> newhaiku}}
+  	{{ #each getHaikus}}
+  		{{ > haiku }}
+  	{{ /each }}
+</body>
+
+<template name="newhaiku">
+	<form>
+		<p>
+			<label for="title">Title</label>
+				<input type="text" id="title">
+		</p>
+		<p>
+			<label for="line1">Line 1 - 5 syllables</label>
+				<input type="text" id="line1">
+		</p>
+		<p>
+			<label for="line2">Line 2 - 7 syllables</label>
+				<input type="text" id="line2">
+		</p>
+		<p>
+			<label for="line3">Line 3 - 5 syllables</label>
+				<input type="text" id="line3">
+		</p>
+	  <button>Submit</button>
+  </form>
+</template>
+
+<template name="haiku">
+<h3>{{ title }}</h3>
+ <p>{{ line1 }}</p>
+ <p>{{ line2 }}</p>
+ <p>{{ line3 }}</p>
+</template>
