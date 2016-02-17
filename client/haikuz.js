@@ -2,11 +2,13 @@ if (Meteor.isClient) {
 
   Template.body.helpers({
     getHaikus: function () {
+      // sort haikus from newest to oldest
       return Haikus.find({}, {sort: {createdAt: -1}});
     }
   });
 
   Template.newhaiku.events({
+    // submit new-haiku form
     'submit .new-haiku': function (event) {
       
       // prevent haiku form submission
@@ -24,7 +26,7 @@ if (Meteor.isClient) {
       $('#line2').val("");
       $('#line3').val("");
 
-      // add haiku to the haikus array
+      // add haiku to the haikus collection
       Haikus.insert({
         title: title,
         line1: line1,
