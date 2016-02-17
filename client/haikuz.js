@@ -10,7 +10,7 @@ if (Meteor.isClient) {
   });
 
   Template.newhaiku.events({
-    'submit': function (event) {
+    'submit .new-haiku': function (event) {
       
       // prevent haiku form submission
       event.preventDefault();
