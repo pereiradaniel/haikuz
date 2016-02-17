@@ -1,11 +1,8 @@
 if (Meteor.isClient) {
 
   Template.body.helpers({
-    haikus: function () {
-      return Session.get('haikus');
-    },
     getHaikus: function () {
-      return Haikus.find({});
+      return Haikus.find({}, {sort: {createdAt: -1}});
     }
   });
 
@@ -32,7 +29,8 @@ if (Meteor.isClient) {
         title: title,
         line1: line1,
         line2: line2,
-        line3: line3
+        line3: line3,
+        createdAt: new Date()
       });
     }
   });
