@@ -22,17 +22,17 @@ Haiku = React.createClass({
 
     return (
       <div className={haikuClassName}>
-
+      
         <h3>{this.props.haiku.title}</h3>
-        <li>{this.props.haiku.line1}</li>
-        <li>{this.props.haiku.line2}</li>
-        <li>{this.props.haiku.line3}</li>
-        <li>Mark as read
+        <p>{this.props.haiku.line1}</p>
+        <p>{this.props.haiku.line2}</p>
+        <p>{this.props.haiku.line3}</p>
+        <p>Mark as read
           <input type="checkbox"
             readOnly={true}
             checked={this.props.haiku.checked}
             onClick={this.toggleChecked} />
-        </li>
+        </p>
         <button className="delete-btn" onClick={this.deleteHaiku}>
           Delete
         </button>

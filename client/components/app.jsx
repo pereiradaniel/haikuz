@@ -4,11 +4,24 @@ App = React.createClass({
   // mixin to use ReactMeteorData
   mixins: [ReactMeteorData],
 
+  getInitialState() {
+    return {
+      hideRead: false
+    }
+  },
+
   // loads haikus from collection into this.data.haikus
   getMeteorData() {
-    return {
-      haikus: Haikus.find({}, {sort: {createdAt: -1}}).fetch()
+    let query = {};
+
+    if (this.state.hideRead) {
+      // filter out haikus that are marked as read
+      query = {checked: {$ne: true}};
     }
+
+    return {
+      haikus: Haikus.find(query, {sort: {createdAt: -1}}).fetch()
+    };
   },
 
   renderHaikus() {
@@ -44,6 +57,12 @@ App = React.createClass({
       });
   },
 
+  toggleHideRead() {
+    this.setState({
+      hideRead: ! this.state.hideRead
+    });
+  },
+
   render() {
     return (
       <div className="container">
@@ -53,23 +72,32 @@ App = React.createClass({
 
 				<form className="new-haiku" onSubmit={this.handleSubmit} >
 					<p>
-						<label for="title">Title</label>
+						<label htmlFor="title">Title</label>
 							<input type="text" id="title" />
 					</p>
 					<p>
-						<label for="line1">Line 1 - 5 syllables</label>
+						<label htmlFor="line1">Line 1 - 5 syllables</label>
 							<input type="text" id="line1" />
 					</p>
 					<p>
-						<label for="line2">Line 2 - 7 syllables</label>
+						<label htmlFor="line2">Line 2 - 7 syllables</label>
 							<input type="text" id="line2" />
 					</p>
 					<p>
-						<label for="line3">Line 3 - 5 syllables</label>
+						<label htmlFor="line3">Line 3 - 5 syllables</label>
 							<input type="text" id="line3" />
 					</p>
 				  <button>Submit</button>
 			  </form>
+
+        <label className="hide-completed">
+          <input
+            type="checkbox"
+            readOnly={true}
+            checked={this.state.hideRead}
+            onClick={this.toggleHideRead} />
+          Hide all marked as read
+        </label>
 
         <ul>
           {this.renderHaikus()}
