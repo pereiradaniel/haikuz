@@ -7,7 +7,7 @@ App = React.createClass({
   // loads haikus from collection into this.data.haikus
   getMeteorData() {
     return {
-      haikus: Haikus.find({}).fetch()
+      haikus: Haikus.find({}, {sort: {createdAt: -1}}).fetch()
     }
   },
 
@@ -39,7 +39,8 @@ App = React.createClass({
         title: title,
         line1: line1,
         line2: line2,
-        line3: line3
+        line3: line3,
+        createdAt: new Date()
       });
   },
 
