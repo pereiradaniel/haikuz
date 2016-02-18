@@ -12,12 +12,17 @@ Haiku = React.createClass({
     });
   },
 
+  deleteHaiku() {
+    Haikus.remove(this.props.haiku._id);
+  },
+
   render() {
     // toggle a className so that CSS can hide or display haikus
     const haikuClassName = this.props.haiku.checked ? "checked" : "";
 
     return (
       <div className={haikuClassName}>
+
         <h3>{this.props.haiku.title}</h3>
         <li>{this.props.haiku.line1}</li>
         <li>{this.props.haiku.line2}</li>
@@ -28,6 +33,9 @@ Haiku = React.createClass({
             checked={this.props.haiku.checked}
             onClick={this.toggleChecked} />
         </li>
+        <button className="delete-btn" onClick={this.deleteHaiku}>
+          Delete
+        </button>
       </div>
     );
   }
