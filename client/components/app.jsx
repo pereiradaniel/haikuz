@@ -1,37 +1,54 @@
 // Root component for entire app
 App = React.createClass({
 
-  // mixin to use ReactMeteorData
+  // Mixin to use ReactMeteorData
   mixins: [ReactMeteorData],
 
+  // This function will set the properties of the component's state
   getInitialState() {
     return {
+      // This component state is a boolean value that is toggled to true/false
+      // by a checkbox inside the component's render function.
       hideRead: false
     }
   },
 
-  // loads haikus from collection into this.data.haikus
+  // Loads haikus from collection "Haikus" into this.data.haikus
   getMeteorData() {
+    // Creates an object called "query" that will later be used to insert
+    // an object that will help the app filter haikus that are marked as read.
     let query = {};
 
+    // This conditional runs if the component state "hideRead" evaluates to
+    // "true".  It is set to true by the function toggleHideRead, which is
+    // activated "onClick" by a checkbox rendered by this component.
     if (this.state.hideRead) {
-      // filter out haikus that are marked as read
+      // Alter the query to filter out all haikus where the "checked" property
+      // is equal to "true".  It will be true if the haiku is marked as read.
       query = {checked: {$ne: true}};
     }
 
+    // Return all haikus, filtering out any that are marked as previously read.
     return {
+      // 'haikus' will equal every object in the Haikus collection that matches
+      // what is laid out in the "query" object.
+      // If the component state "hideRead" is set to false, query will be
+      // an empty object, and therefore all haikus will be returned.
+      // In addition to matching the query, objects will be returned sorted
+      // by newest first.
       haikus: Haikus.find(query, {sort: {createdAt: -1}}).fetch()
     };
   },
 
+  // Function to map the array of haikus into the DOM
   renderHaikus() {
-    // get haikus from this.data.haikus
+    // Maps the haikus into instances of the component called "Haiku"
     return this.data.haikus.map((haiku) => {
       return <Haiku key={haiku._id} haiku={haiku} />;
     });
   },
-
-  // handle form submission for new haiku
+  
+  // Handle form submission for new haiku
   handleSubmit(event) {
   	event.preventDefault();
 
