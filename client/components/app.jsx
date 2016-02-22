@@ -58,12 +58,13 @@ App = React.createClass({
   	event.preventDefault();
 
       // get values from input fields
-      var title = React.findDOMNode(this.refs.title).value.trim();
-      var line1 = React.findDOMNode(this.refs.line1).value.trim();
-      var line2 = React.findDOMNode(this.refs.line2).value.trim();
-      var line3 = React.findDOMNode(this.refs.line3).value.trim();
-
-      Meteor.call("addHaiku", title, line1, line2, line3);
+      haiku = {
+        title: React.findDOMNode(this.refs.title).value.trim(),
+        line1: React.findDOMNode(this.refs.line1).value.trim(),
+        line2: React.findDOMNode(this.refs.line2).value.trim(),
+        line3: React.findDOMNode(this.refs.line3).value.trim()
+      }
+      Meteor.call("addHaiku", haiku);
 
       // clear input fields on the DOM
       React.findDOMNode(this.refs.title).value = "";
