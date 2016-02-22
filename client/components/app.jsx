@@ -39,7 +39,9 @@ App = React.createClass({
       haikus: Haikus.find(query, {sort: {createdAt: -1}}).fetch(),
       // returns variable unreadCount that is equal to the count of haikus that
       // are not checked as "read"
-      unreadCount: Haikus.find({checked: {$ne: true}}).count()
+      unreadCount: Haikus.find({checked: {$ne: true}}).count(),
+      // Get information about the logged in user
+      currentUser: Meteor.user()
     };
   },
 
@@ -73,7 +75,9 @@ App = React.createClass({
         line1: line1,
         line2: line2,
         line3: line3,
-        createdAt: new Date()
+        createdAt: new Date(),
+        owner: Meteor.userId(),           // _id of logged in user
+        username: Meteor.user().username  // username of logged in user
       });
   },
 
@@ -89,38 +93,39 @@ App = React.createClass({
         <header>
           <h1>Haikuz</h1>
           <h3>{this.data.unreadCount} unread haikus</h3>
+          <label className="hide-completed">
+            <input
+              type="checkbox"
+              readOnly={true}
+              checked={this.state.hideRead}
+              onClick={this.toggleHideRead} />
+            Hide all marked as read
+          </label>
         </header>
 
         <AccountsUIWrapper />
 
-				<form className="new-haiku" onSubmit={this.handleSubmit} >
-					<p>
-						<label htmlFor="title">Title</label>
-							<input type="text" id="title" />
-					</p>
-					<p>
-						<label htmlFor="line1">Line 1 - 5 syllables</label>
-							<input type="text" id="line1" />
-					</p>
-					<p>
-						<label htmlFor="line2">Line 2 - 7 syllables</label>
-							<input type="text" id="line2" />
-					</p>
-					<p>
-						<label htmlFor="line3">Line 3 - 5 syllables</label>
-							<input type="text" id="line3" />
-					</p>
-				  <button>Submit</button>
-			  </form>
-
-        <label className="hide-completed">
-          <input
-            type="checkbox"
-            readOnly={true}
-            checked={this.state.hideRead}
-            onClick={this.toggleHideRead} />
-          Hide all marked as read
-        </label>
+        { this.data.currentUser ?
+        <form className="new-haiku" onSubmit={this.handleSubmit} >
+          <p>
+            <label htmlFor="title">Title</label>
+              <input type="text" id="title" />
+          </p>
+          <p>
+            <label htmlFor="line1">Line 1 - 5 syllables</label>
+              <input type="text" id="line1" />
+          </p>
+          <p>
+            <label htmlFor="line2">Line 2 - 7 syllables</label>
+              <input type="text" id="line2" />
+          </p>
+          <p>
+            <label htmlFor="line3">Line 3 - 5 syllables</label>
+              <input type="text" id="line3" />
+          </p>
+          <button>Submit</button>
+        </form> : ''
+        }
 
         <ul>
           {this.renderHaikus()}

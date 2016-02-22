@@ -24,6 +24,7 @@ Haiku = React.createClass({
       <div className={haikuClassName}>
       
         <h3>{this.props.haiku.title}</h3>
+        <h3>Author: {this.props.haiku.username}</h3>
         <p>{this.props.haiku.line1}</p>
         <p>{this.props.haiku.line2}</p>
         <p>{this.props.haiku.line3}</p>
