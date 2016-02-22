@@ -91,6 +91,8 @@ App = React.createClass({
           <h3>{this.data.unreadCount} unread haikus</h3>
         </header>
 
+        <AccountsUIWrapper />
+
 				<form className="new-haiku" onSubmit={this.handleSubmit} >
 					<p>
 						<label htmlFor="title">Title</label>
