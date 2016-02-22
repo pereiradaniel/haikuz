@@ -1,5 +1,9 @@
 // The code inside this conditional statement will run only on the client side
 if (Meteor.isClient) {
+	// User username for login instead of email addresses
+	Accounts.ui.config({
+		passwordSignupFields: "USERNAME_ONLY"
+	});
 
   // This code runs when the app starts
   Meteor.startup(function () {
