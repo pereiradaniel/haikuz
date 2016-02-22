@@ -17,5 +17,4 @@ if (Meteor.isClient) {
   	//			Specifies the DOM node where the component is to be mounted
     ReactDOM.render(<App />, document.getElementById("mount-point"));
   });
-
 }

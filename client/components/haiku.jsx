@@ -6,14 +6,12 @@ Haiku = React.createClass({
   },
 
   toggleChecked() {
-    // set checked property to opposite of its current value
-    Haikus.update(this.props.haiku._id, {
-      $set: {checked: ! this.props.haiku.checked}
-    });
+    // Set checked property opposite of it's current value
+    Meteor.call("setChecked", this.props.haiku._id, ! this.props.haiku.checked);
   },
 
   deleteHaiku() {
-    Haikus.remove(this.props.haiku._id);
+    Meteor.call("removeHaiku", this.props.haiku._id);
   },
 
   render() {
