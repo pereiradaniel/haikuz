@@ -36,7 +36,10 @@ App = React.createClass({
       // an empty object, and therefore all haikus will be returned.
       // In addition to matching the query, objects will be returned sorted
       // by newest first.
-      haikus: Haikus.find(query, {sort: {createdAt: -1}}).fetch()
+      haikus: Haikus.find(query, {sort: {createdAt: -1}}).fetch(),
+      // returns variable unreadCount that is equal to the count of haikus that
+      // are not checked as "read"
+      unreadCount: Haikus.find({checked: {$ne: true}}).count()
     };
   },
 
@@ -85,6 +88,7 @@ App = React.createClass({
       <div className="container">
         <header>
           <h1>Haikuz</h1>
+          <h3>{this.data.unreadCount} unread haikus</h3>
         </header>
 
 				<form className="new-haiku" onSubmit={this.handleSubmit} >
