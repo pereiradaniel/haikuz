@@ -5,6 +5,8 @@ if (Meteor.isClient) {
 		passwordSignupFields: "USERNAME_ONLY"
 	});
 
+	Meteor.subscribe("haikus");
+
   // This code runs when the app starts
   Meteor.startup(function () {
   	// ReactDOM.render() will render the component "App" in the DOM node with the

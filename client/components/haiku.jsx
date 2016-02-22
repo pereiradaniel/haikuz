@@ -2,7 +2,8 @@
 Haiku = React.createClass({
   propTypes: {
     // component displays haiku through react prop
-    haiku: React.PropTypes.object.isRequired
+    haiku: React.PropTypes.object.isRequired,
+    showPrivateButton: React.PropTypes.bool.isRequired
   },
 
   toggleChecked() {
@@ -13,10 +14,15 @@ Haiku = React.createClass({
   deleteHaiku() {
     Meteor.call("removeHaiku", this.props.haiku._id);
   },
+  
+  togglePrivate() {
+    Meteor.call("setPrivate", this.props.haiku._id, ! this.props.haiku.private);
+  },
 
   render() {
     // toggle a className so that CSS can hide or display haikus
-    const haikuClassName = this.props.haiku.checked ? "checked" : "";
+    const haikuClassName = (this.props.haiku.checked ? "checked" : "") + " " +
+      (this.props.haiku.private ? "private" : "");
 
     return (
       <div className={haikuClassName}>
@@ -32,6 +38,12 @@ Haiku = React.createClass({
             checked={this.props.haiku.checked}
             onClick={this.toggleChecked} />
         </p>
+        { this.props.showPrivateButton ? (
+          <button className="toggle-private" onClick={this.togglePrivate}>
+            { this.props.haiku.private ? "Private" : "Public" }
+          </button>
+            ) : '' }
+
         <button className="delete-btn" onClick={this.deleteHaiku}>
           Delete
         </button>

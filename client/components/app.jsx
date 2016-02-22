@@ -49,7 +49,13 @@ App = React.createClass({
   renderHaikus() {
     // Maps the haikus into instances of the component called "Haiku"
     return this.data.haikus.map((haiku) => {
-      return <Haiku key={haiku._id} haiku={haiku} />;
+        const currentUserId = this.data.currentUser && this.data.currentUser._id;
+        const showPrivateButton = haiku.owner === currentUserId;
+
+        return <Haiku
+          key={haiku._id}
+          haiku={haiku}
+          showPrivateButton={showPrivateButton} />;
     });
   },
   
